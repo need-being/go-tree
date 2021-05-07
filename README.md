@@ -56,3 +56,55 @@ root
     ├── [hello world]
     └── [42 0.5 QED]
 ```
+
+## Advanced Usage
+
+The following code
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+
+	"github.com/need-being/go-tree"
+)
+
+func main() {
+	root := tree.New("root")
+
+	root.AddPathString("strings/foo")
+	root.AddPathString("strings/bar")
+
+	root.AddPath("numbers", "floats", 0.5)
+	root.AddPath("numbers", "integers", 0)
+	root.AddPath("numbers", "integers", 42)
+
+	root.Add("QED")
+
+	printer := tree.NewPrinter(os.Stdout, func(n *tree.Node) string {
+		if n.Virtual {
+			return fmt.Sprintf("%v (virtual)", n.Value)
+		}
+		return fmt.Sprint(n.Value)
+	})
+	printer.Print(root)
+}
+```
+
+outputs
+
+```
+root
+├── strings (virtual)
+│   ├── foo
+│   └── bar
+├── numbers (virtual)
+│   ├── floats (virtual)
+│   │   └── 0.5
+│   └── integers (virtual)
+│       ├── 0
+│       └── 42
+└── QED
+```

@@ -7,10 +7,10 @@ import (
 
 // Node represents a tree node.
 type Node struct {
-	Value      interface{}
-	Nodes      []*Node
-	Virtual    bool
-	Annotation interface{}
+	Value       interface{}
+	Nodes       []*Node
+	Virtual     bool
+	Annotations map[string]interface{}
 }
 
 // New creates a new tree / root node.
